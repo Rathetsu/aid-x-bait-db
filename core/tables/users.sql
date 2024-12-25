@@ -1,4 +1,9 @@
 ------------------------------------------------------------------------------
+-- `core.user_types` enum type
+------------------------------------------------------------------------------
+DROP TYPE IF EXISTS core.user_types;
+CREATE TYPE core.user_types AS ENUM ('patient', 'therapist', 'consultant', 'admin', 'support');
+------------------------------------------------------------------------------
 -- `core.users` table
 ------------------------------------------------------------------------------
 DROP TABLE IF EXISTS core.users;
@@ -14,6 +19,7 @@ CREATE TABLE core.users
     latitude     NUMERIC(9, 6),
     longitude    NUMERIC(9, 6),
     payment_info JSONB,
+    user_type    core.user_types,
     last_login   TIMESTAMP WITH TIME ZONE,
     created_at   TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at   TIMESTAMP WITH TIME ZONE DEFAULT NOW()
