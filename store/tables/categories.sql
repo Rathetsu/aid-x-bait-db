@@ -11,13 +11,3 @@ CREATE TABLE store.categories
     updated_at  TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 ------------------------------------------------------------------------------
--- Trigger to update the `updated_at` column
-------------------------------------------------------------------------------
-DROP TRIGGER IF EXISTS update_categories_updated_at ON store.categories;
-CREATE TRIGGER update_categories_updated_at
-    BEFORE UPDATE
-    ON store.categories
-    FOR
-        EACH ROW
-EXECUTE FUNCTION core.update_updated_at_column();
-------------------------------------------------------------------------------
