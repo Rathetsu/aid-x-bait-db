@@ -6,8 +6,8 @@ CREATE TYPE core.user_types AS ENUM ('patient', 'therapist', 'consultant', 'admi
 ------------------------------------------------------------------------------
 -- `core.users` table
 ------------------------------------------------------------------------------
-DROP TABLE IF EXISTS core.users;
-CREATE TABLE core.users
+DROP TABLE IF EXISTS core.users CASCADE;
+CREATE TABLE IF NOT EXISTS core.users
 (
     id           SERIAL PRIMARY KEY,
     phone_number VARCHAR(255) NOT NULL UNIQUE,
@@ -15,11 +15,7 @@ CREATE TABLE core.users
     clerk_id     VARCHAR(255) NOT NULL UNIQUE,
     first_name   VARCHAR(50),
     last_name    VARCHAR(50),
-    address      TEXT,
-    latitude     NUMERIC(9, 6),
-    longitude    NUMERIC(9, 6),
-    payment_info JSONB,
-    user_type    core.user_types,
+    user_type    core.user_types NOT NULL,
     last_login   TIMESTAMP WITH TIME ZONE,
     created_at   TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at   TIMESTAMP WITH TIME ZONE DEFAULT NOW()

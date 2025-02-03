@@ -30,7 +30,7 @@ CREATE TABLE core.patient_addresses
 (
     id                    SERIAL PRIMARY KEY,
     patient_id            INTEGER      NOT NULL UNIQUE REFERENCES core.patients (id),
-    address_type          VARCHAR(255) NOT NULL CHECK (address_type IN ('Home', 'Apartment')),
+    address_type          VARCHAR(255) NOT NULL CHECK (address_type IN ('House', 'Apartment')),
     address_label         VARCHAR(255) NOT NULL,
     governorate           VARCHAR(255) NOT NULL,
     city                  VARCHAR(255) NOT NULL,
@@ -40,6 +40,7 @@ CREATE TABLE core.patient_addresses
     apartment             VARCHAR(255),
     additional_directions TEXT,
     phone                 VARCHAR(255),
+    is_deleted            BOOLEAN DEFAULT FALSE,
     created_at            TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at            TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
