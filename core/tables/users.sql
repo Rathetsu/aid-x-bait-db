@@ -10,12 +10,13 @@ DROP TABLE IF EXISTS core.users CASCADE;
 CREATE TABLE IF NOT EXISTS core.users
 (
     id           SERIAL PRIMARY KEY,
-    phone_number VARCHAR(255) NOT NULL UNIQUE,
-    email        VARCHAR(255) NOT NULL UNIQUE,
-    clerk_id     VARCHAR(255) NOT NULL UNIQUE,
+    phone_number VARCHAR(255)    NOT NULL UNIQUE,
+    email        VARCHAR(255) UNIQUE,
+    clerk_id     VARCHAR(255)    NOT NULL UNIQUE,
     first_name   VARCHAR(50),
     last_name    VARCHAR(50),
     user_type    core.user_types NOT NULL,
+    image_url    VARCHAR(255),
     last_login   TIMESTAMP WITH TIME ZONE,
     created_at   TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at   TIMESTAMP WITH TIME ZONE DEFAULT NOW()

@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------------
 -- `store.orders` table
 ------------------------------------------------------------------------------
-DROP TABLE IF EXISTS store.orders;
+DROP TABLE IF EXISTS store.orders CASCADE;
 CREATE TABLE store.orders
 (
     id                  SERIAL PRIMARY KEY,
@@ -10,11 +10,17 @@ CREATE TABLE store.orders
     shipping_address_id INTEGER REFERENCES core.patient_addresses (id),
     billing_address_id  INTEGER REFERENCES core.patient_addresses (id),
     total_amount        NUMERIC(10, 2) NOT NULL  DEFAULT 0,
+    payment_method      VARCHAR(10)    NOT NULL  DEFAULT 'cash_on_delivery' CHECK (payment_method IN ('cash_on_delivery', 'online')),
+    payment_status      VARCHAR(10)    NOT NULL  DEFAULT 'pending' CHECK (payment_status IN ('pending', 'paid', 'failed')),
+    soft_deleted        BOOLEAN        NOT NULL  DEFAULT FALSE,
     created_at          TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at          TIMESTAMP WITH TIME ZONE
 );
 CREATE INDEX idx_orders_order_type ON store.orders (order_type);
 CREATE INDEX idx_orders_requires_shipping ON store.orders (requires_shipping);
+CREATE INDEX idx_orders_payment_method ON store.orders (payment_method);
+CREATE INDEX idx_orders_payment_status ON store.orders (payment_status);
+CREATE INDEX idx_orders_soft_deleted ON store.orders (soft_deleted);
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 -- `store.order_items` table
